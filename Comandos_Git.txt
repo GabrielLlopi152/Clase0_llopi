@@ -1,0 +1,7 @@
+git init                        #da comienzo al repo o lo reinicia
+git status                      #información actual del repositorio
+git add                         #permite añadir elementos/archivos
+git commit -m 'comentario'      #comentario para explicar el commit
+git log                         #muestra los commits realizados
+git push                        #sube al Github personal
+git pull                        #descarga y trae programas de internet

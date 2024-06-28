@@ -81,8 +81,8 @@ class App(customtkinter.CTk):
 
             if año_emitido >= 2000 and año_emitido <= 2015:
                 contador_juegos_entre_2000_2015 += 1
-                if juego_mas_barato_entre_2000_y_2015 == False:
-                    juego_mas_barato_entre_2000_y_2015 = nombre_juego
+                if juego_entre_2000_y_2015 == False:
+                    juego_mas_caro_entre_2000_y_2015 = nombre_juego
                     juego_mas_barato_entre_2000_y_2015 = nombre_juego
                     juego_entre_2000_y_2015 = True
                 else:
