@@ -49,8 +49,8 @@
             "idioma": "ES"
         },
         {
-            "nombre": "y",
-            "puntaje": 0,
+            "nombre": "llopi",
+            "puntaje": 8,
             "tiempo": 7,
             "idioma": "ES"
         },
@@ -112,6 +112,12 @@
             "nombre": "n",
             "puntaje": 0,
             "tiempo": 2,
+            "idioma": "ES"
+        },
+        {
+            "nombre": "y",
+            "puntaje": 0,
+            "tiempo": 7,
             "idioma": "ES"
         }
     ]

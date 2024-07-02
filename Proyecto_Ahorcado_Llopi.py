@@ -43,10 +43,11 @@ contador_cambios = 0
 bandera_timer = True
 
 while(running):
-
+	
 	#Idiomas
 	if español:
 		idioma = "ES"
+		mensaje_titulo = 'Ahorcado'
 		mensaje_idioma_tabla = 'Idioma'
 		mensaje_puntaje_tabla = 'Puntuación'
 		mensaje_tiempo_tabla = 'Tiempo'
@@ -69,6 +70,7 @@ while(running):
 		mensaje_nombre_usuario = 'Nombre: '
 	else:
 		idioma = "EN"
+		mensaje_titulo = 'Hangman'
 		mensaje_idioma_tabla = 'Language'
 		mensaje_puntaje_tabla = 'Score'
 		mensaje_tiempo_tabla = 'Time'
@@ -132,7 +134,7 @@ while(running):
 		#Cargar imagenes del menu
 		fondo = pygame.image.load(nombre_fondo)
 		icono_musica = pygame.image.load(imagen_musica)
-		window.blit(fondo, (0,0))	
+		window.blit(fondo, (0,0))
 
 		#Botones del menu
 		boton_jugar = pygame.Rect((400, 250), (250, 40)) #zona colision
@@ -145,9 +147,12 @@ while(running):
 		pygame.draw.rect(window, (220, 245, 55), (400, 400, 250, 40))
 		boton_musica = pygame.Rect((10, 650), (50, 50))
 		window.blit(icono_musica, (10, 650))
+		pygame.draw.rect(window, (250, 155, 245), (295, 50, 510, 100))
 		boton_volver = pygame.Rect((380, 610), (250, 40))
 
 		#Texto de interfaz menu
+		fuente_texto = cambiar_fuente_texto(150)
+		mostrar_texto_negro(mensaje_titulo, fuente_texto, (300,50))
 		fuente_texto = cambiar_fuente_texto(25)
 		mostrar_texto_negro(mensaje_salir, fuente_texto,(775,10))
 		fuente_texto = cambiar_fuente_texto(40)
@@ -155,9 +160,11 @@ while(running):
 		mostrar_texto_negro(mensaje_boton_ranking, fuente_texto,(465,310))
 		mostrar_texto_negro(mensaje_boton_idioma, fuente_texto,(405,360))
 		mostrar_texto_negro(mensaje_boton_salir, fuente_texto,(490,410))
+		
 
 	#Mostrar los mejores jugadores
-	elif ver_ranking: 
+	elif ver_ranking:
+
 		#Fondo menu
 		fondo = pygame.image.load(nombre_fondo)
 		window.blit(fondo, (0,0))
