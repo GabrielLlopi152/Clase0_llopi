@@ -146,8 +146,6 @@ def ordenar_lista_diccionarios(lista:list,key:str, criterio:str):
 				lista[j] = auxiliar
 
 def listar_encabezado(mensaje_nombre:str, mensaje_puntaje:str, mensaje_tiempo:str,idioma:str,fuente_texto, direccion_x, direccion_y):
-	'''mensaje = '{0}    {1}    {2}    {3}'.format(mensaje_nombre,mensaje_puntaje,mensaje_tiempo,idioma)
-	mostrar_texto_negro(mensaje,fuente_texto, (direccion_x,direccion_y))'''
 	mostrar_texto_negro(mensaje_nombre,fuente_texto, (direccion_x,direccion_y))
 	mostrar_texto_negro(mensaje_puntaje,fuente_texto, (direccion_x+150,direccion_y))
 	mostrar_texto_negro(mensaje_tiempo,fuente_texto, (direccion_x+330,direccion_y))

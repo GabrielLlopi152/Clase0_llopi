@@ -173,7 +173,7 @@ while(running):
 		boton_volver = pygame.Rect((375, 610), (250, 40))
 		pygame.draw.rect(window, (220, 245, 55), (375, 610, 250, 40))
 		mostrar_texto_negro(mensaje_boton_volver, fuente_texto, (390,620))
-
+  
 		#Tablero
 		pygame.draw.rect(window, (220, 245, 55), (150, 100, 700, 500))
 		listar_encabezado(mensaje_nombre_tabla,mensaje_puntaje_tabla, mensaje_tiempo_tabla,mensaje_idioma_tabla, fuente_texto, 200, 110)

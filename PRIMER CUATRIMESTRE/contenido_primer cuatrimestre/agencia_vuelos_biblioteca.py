@@ -111,7 +111,7 @@ def listar_id_nombre(diccionario:dict):
 
     Recibe un diccionario, e imprime ID y el NOMBRE vinculado a esa id
     '''
-    for pasajero in diccionario['pasajeros']:
+    for pasajero in diccionario:
         for clave in pasajero.keys():
             if clave == 'Id':
                 mensaje = 'ID:  {0}. \t Nombre: {1}'.format(pasajero[clave], pasajero['Apellido_Nombre_Pasajero'])
@@ -130,7 +130,7 @@ def validar_id(diccionario:dict, id:str):
     """
 
     retorno = False
-    for pasajero in diccionario['pasajeros']:
+    for pasajero in diccionario:
         for clave in pasajero.keys():
             if clave == 'Id' and id == str(pasajero[clave]):
                 retorno = pasajero
@@ -153,7 +153,7 @@ def consultar_id(diccionario:dict)->dict:
         persona_encontrada = validar_id(diccionario, opcion)
     return persona_encontrada
 
-def contar_indice(diccionario:dict,nombre_lista:str)->int:
+def contar_indice(diccionario:dict)->int:
     """cuenta el total de indice de una lista de un diccionario
     Devuelve el indice final
 
@@ -165,7 +165,7 @@ def contar_indice(diccionario:dict,nombre_lista:str)->int:
         int: indice
     """    
     contador = 0
-    for i in diccionario[nombre_lista]:
+    for i in diccionario:
         contador += 1
     return contador
 
@@ -208,17 +208,16 @@ def modificar_nombre_apellido():
         cambio = input('ERROR. Nombre muy largo. Ingrese otro: ')
     return cambio
 
-def registrar_nuevo_vuelo(diccionario:dict,nombre_lista:str):
+def registrar_nuevo_vuelo(diccionario:dict):
     """Pide al usuario el ingreso de datos, y valida que sean los adecuados antes de guardarlos
 
     Args:
         diccionario (dict): _description_
-        nombre_lista (str): _description_
 
     Returns:
         dict: retorna un diccionario con los datos almacenados 
     """
-    indice= contar_indice(diccionario,nombre_lista)
+    indice= contar_indice(diccionario)
     indice +=1
 
     nombre_aerolinea = alta('Introduzca la aerolinea (LATAM | AA | IBERIA): ')
@@ -350,7 +349,7 @@ def validar_eliminacion(persona_borrar:dict):
 def acomodar_tras_eliminacion(registro_vuelos:dict, persona_borrar:dict):
         lista_nueva = []
 
-        for pasajero in registro_vuelos['pasajeros']: #acomodo los ID y agrego a una nueva lista
+        for pasajero in registro_vuelos: #acomodo los ID y agrego a una nueva lista
             if pasajero['Id'] != persona_borrar['Id']:
                 if pasajero['Id'] > persona_borrar['Id']:      
                     pasajero['Id'] -= 1
@@ -384,7 +383,7 @@ def A_cargar_json(opcion:str)->dict|bool:
     Args:
         opcion (str): recibe una letra
         "A" -> cargar datos json
-        "F" -> salir
+        "G" -> salir
         Cualquier otro caracter imprimirá que ha ocurrido un error.
 
     Returns:
@@ -392,11 +391,13 @@ def A_cargar_json(opcion:str)->dict|bool:
     """    
     match opcion:
         case 'A' | 'a':
-            archivo_json = leer_json('data.json')
+            with open('data.json', 'r') as file:
+                archivo_json = json.load(file)['pasajeros']
             print('Datos cargados correctamente')
             return archivo_json
+            #archivo_json = leer_json('data.json')
         
-        case 'F' | 'f':
+        case 'G' | 'g':
             continuar = False
             return continuar
 
@@ -410,8 +411,8 @@ def B_alta(diccionario:dict):
     Args:
         diccionario (dict): variable donde está contenido la informacion del archivo json
     """    
-    nuevo_vuelo = registrar_nuevo_vuelo(diccionario, 'pasajeros')
-    diccionario['pasajeros'].append(nuevo_vuelo)
+    nuevo_vuelo = registrar_nuevo_vuelo(diccionario)
+    diccionario.append(nuevo_vuelo)
     #actualizar_json('data.json', diccionario)
 
 def C_modificar(diccionario:dict):
@@ -441,12 +442,13 @@ def D_baja(diccionario:dict):
 
     if eliminacion_confirmada:
         lista_nueva = acomodar_tras_eliminacion(diccionario, persona_borrar)
-        diccionario['pasajeros'] = lista_nueva
-        #actualizar_json('data.json', diccionario)
+        diccionario = lista_nueva
+        print(diccionario)
         mensaje = 'Se ha eliminado correctamente a {0}'.format(persona_borrar['Apellido_Nombre_Pasajero'])
     else:
         mensaje = 'Se ha cancelado la eliminación de {0}'.format(persona_borrar['Apellido_Nombre_Pasajero'])
     print(mensaje)
+    return diccionario
 
 def E_listar(diccionario:dict):
     """Recibe la lista de vuelos y lista tal como pide el enunciado.
@@ -466,7 +468,7 @@ def E_listar(diccionario:dict):
         
     print(encabezado)
                 
-    for pasajero in diccionario['pasajeros']:
+    for pasajero in diccionario:
         mensaje = ''
         for dato in lista_ordenada_E:
             mensaje+= '|'
@@ -521,3 +523,37 @@ def ordenar_lista_diccionarios(lista:list,key:str, criterio:str):
 				auxiliar = lista[i]
 				lista[i] = lista[j]
 				lista[j] = auxiliar
+
+def guardar_archivo(nombre_archivo:str, contenido_archivo:str):
+    retorno= False
+    if len(nombre_archivo) != 0 and len(contenido_archivo) != 0:
+        with open(nombre_archivo, 'w') as file:
+            file.write(contenido_archivo)
+            retorno = 'Se creó el archivo: ' + nombre_archivo
+    return retorno
+
+def generar_csv(nombre_archivo:str, lista:list):
+    """crea un csv que contiene la informacion de una lista
+
+    Args:
+        nombre_archivo (str): nombre del archivo csv
+        lista (list): lista que se guardará en el csv
+
+    Returns:
+        _type_: _description_
+    """    
+    retorno = False
+    all_keys = ''
+    datos = ''
+    if len(lista) != 0:
+        for key in lista[0].keys():
+            all_keys += str(key) + ','
+        all_keys += '\n'
+        for personaje in lista:
+            for dato in personaje.values():
+                datos += str(dato) + ','
+            datos += '\n'
+        guardar_archivo(nombre_archivo, all_keys + datos)
+    else:
+        return False
+    

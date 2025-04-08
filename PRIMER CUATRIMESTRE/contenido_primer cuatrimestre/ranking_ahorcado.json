@@ -1,0 +1,28 @@
+{
+    "partidas": [
+        {
+            "nombre": "samcito",
+            "puntaje": 46,
+            "tiempo": 55,
+            "idioma": "ES"
+        },
+        {
+            "nombre": "larry",
+            "puntaje": 42,
+            "tiempo": 30,
+            "idioma": "EN"
+        },
+        {
+            "nombre": "gabriel",
+            "puntaje": 23,
+            "tiempo": 55,
+            "idioma": "ES"
+        },
+        {
+            "nombre": "ana",
+            "puntaje": 10,
+            "tiempo": 64,
+            "idioma": "ES"
+        }
+    ]
+}
